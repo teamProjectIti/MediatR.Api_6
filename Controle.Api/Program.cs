@@ -1,5 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
+  
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddSwaggerGen();
 //contect with database
 builder.Services.AddDbContext<DataContext>(op =>
 {
-    op.useSqlLite(builder.Configuration.GetConnectionString("DataConnect"));
+    op.UseSqlite(builder.Configuration.GetConnectionString("DataConnect"));
 });
 
 
