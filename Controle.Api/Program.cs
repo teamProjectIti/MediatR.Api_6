@@ -1,6 +1,9 @@
+using Application.Activities;
+using Application.BaseGetData.UniteOfWork;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
-  
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,11 @@ builder.Services.AddDbContext<DataContext>(op =>
 {
     op.UseSqlite(builder.Configuration.GetConnectionString("DataConnect"));
 });
+// signe register 
+builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 
+// use Meditor
+builder.Services.AddMediatR(typeof(List.Handler).Assembly);
 
 var app = builder.Build();
 
