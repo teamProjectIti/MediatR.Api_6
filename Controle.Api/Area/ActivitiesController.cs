@@ -17,5 +17,11 @@ namespace Controle.Api.Area
         {
             return Ok(await mediator.Send(new Details.Query { Id=Id}));
         }
+        
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult> DeleteActivity(Guid Id)
+        {
+            return Ok(await mediator.Send(new Details.Query { Id=Id}));
+        }
     }
 }
