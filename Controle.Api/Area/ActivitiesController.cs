@@ -1,7 +1,5 @@
 ﻿using Application.Activities;
 using Controle.Api.Controllers;
-using Domain.Entity.Active;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controle.Api.Area
