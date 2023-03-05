@@ -1,6 +1,7 @@
 using Application.Activities;
 using Application.BaseGetData.UniteOfWork;
 using Application.Core;
+using Application.Core.MiddleWare;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
@@ -10,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(confic =>
+{
+    confic.RegisterValidatorsFromAssemblyContaining<Create>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,7 +31,10 @@ builder.Services.AddScoped<IUniteOfWork, UniteOfWork>();
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
+
+//middleware customize
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,17 +1,19 @@
-﻿using Domain.Entity.Active;
+﻿using Application.Core.HandleResponseAndRequest;
+using Domain.Entity.Active;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Persistance.Context;
 
 namespace Application.Activities
 {
     public class Details
     {
-        public class Query : IRequest<Activity>
+        public class Query : IRequest<Result<Activity>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Activity>
+        public class Handler : IRequestHandler<Query, Result<Activity>>
         {
             private readonly DataContext _dataContext;
 
@@ -19,9 +21,9 @@ namespace Application.Activities
             {
                _dataContext = dataContext;
             }
-            public async Task<Activity> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Activity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _dataContext.activities.FindAsync(request.Id);
+                return Result<Activity>.Success(await _dataContext.activities.FindAsync(request.Id));
             }
         }
     }

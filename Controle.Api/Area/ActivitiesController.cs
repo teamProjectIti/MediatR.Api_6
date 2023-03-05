@@ -8,35 +8,31 @@ namespace Controle.Api.Area
     public class ActivitiesController : BaseApiController
     {
         [HttpGet("GetAllActivities")]
-        public async Task<ActionResult> GetAllActivities()
+        public async Task<IActionResult> GetAllActivities()
         {
-            return Ok(await mediator.Send(new List.Query()));
+            return HandleRequest(await mediator.Send(new List.Query()));
         }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult> GetAllActivities(Guid Id)
+        public async Task<IActionResult> GetActivity(Guid Id)
         {
-            return Ok(await mediator.Send(new Details.Query { Id=Id}));
+            return HandleRequest(await mediator.Send(new Details.Query { Id = Id }));
         }
-        
         [HttpDelete("{Id}")]
-        public async Task<ActionResult> DeleteActivity(Guid Id)
+        public async Task<IActionResult> DeleteActivity(Guid Id)
         {
-            return Ok(await mediator.Send(new Delete.Command { Id=Id}));
+            return HandleRequest(await mediator.Send(new Delete.Command { Id=Id}));
         }
-        
         [HttpPut("{Id}")]
-        public async Task<ActionResult> UpdateActivity(Guid Id,Activity model)
+        public async Task<IActionResult> UpdateActivity(Guid Id,Activity model)
         {
             model.Id=Id;
-
-            return Ok(await mediator.Send(new Edit.command { Activity= model }));
+            return HandleRequest(await mediator.Send(new Edit.command { Activity= model }));
         }
-        
         [HttpPost("CreateActivity")]
-        public async Task<ActionResult> CreateActivity(Activity model)
+        public async Task<IActionResult> CreateActivity(Activity model)
         {
-            return Ok(await mediator.Send(new Create.command { Activity= model }));
+            return HandleRequest(await mediator.Send(new Create.command { Activity= model }));
         }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using Domain.Entity.Active;
+using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Context
 {
-    public class DataContext:DbContext
+    public class DataContext:IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options):base(options)
         {
-
         }
-
-
       public  DbSet<Activity> activities { get; set; }
     }
 }

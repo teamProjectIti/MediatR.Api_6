@@ -1,4 +1,5 @@
 ﻿using Application.BaseGetData.UniteOfWork;
+using Application.Core.HandleResponseAndRequest;
 using Domain.Entity.Active;
 using MediatR;
 using Persistance.Context;
@@ -8,12 +9,18 @@ namespace Application.Activities
     public class Create
     {
 
-        public class command : IRequest
+        public class command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
         }
-
-        public class Handler : IRequestHandler<command>
+        public class commandValidatoe:AbstractValidator<Activity>
+        {
+            public commandValidatoe()
+            {
+                RuleFor(x => x.Activity).SetValidator(new ActivityValidator ());
+            }
+        }
+        public class Handler : IRequestHandler<command, Result<Unit>>
         {
             private readonly DataContext database;
             private readonly IUniteOfWork uniteOfWork;
@@ -23,13 +30,13 @@ namespace Application.Activities
                 this.database = database;
                 this.uniteOfWork = uniteOfWork;
             }
-            public async Task<Unit> Handle(command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(command request, CancellationToken cancellationToken)
             {
                 database.activities.Add(request.Activity);
-                await uniteOfWork.SaveChangesAsync();
+               var res= await uniteOfWork.SaveChangesAsync()>0;
+                if (!res) Result<Unit>.Failure("Failed Create Activity");
 
-                return Unit.Value;
-
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }
