@@ -23,6 +23,7 @@ namespace Controle.Api.Area
         {
             return HandleRequest(await mediator.Send(new Delete.Command { Id=Id}));
         }
+
         [HttpPut("{Id}")]
         public async Task<IActionResult> UpdateActivity(Guid Id,Activity model)
         {
