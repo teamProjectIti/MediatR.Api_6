@@ -1,5 +1,6 @@
 ﻿using Domain.Entity.Active;
 using Domain.User;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Context

@@ -1,6 +1,7 @@
 ﻿using Application.BaseGetData.UniteOfWork;
 using Application.Core.HandleResponseAndRequest;
 using Domain.Entity.Active;
+using FluentValidation;
 using MediatR;
 using Persistance.Context;
 
