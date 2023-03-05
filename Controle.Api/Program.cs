@@ -5,15 +5,17 @@ using Application.Core.MiddleWare;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddFluentValidation(confic =>
+builder.Services.AddControllers(opt =>
 {
-    confic.RegisterValidatorsFromAssemblyContaining<Create>();
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    opt.Filters.Add(new AuthorizeFilter(policy));
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

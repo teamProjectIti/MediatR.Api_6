@@ -14,11 +14,11 @@ namespace Application.Activities
         {
             public Activity Activity { get; set; }
         }
-        public class commandValidatoe:AbstractValidator<Activity>
+         public class CommandValidator : AbstractValidator<command>
         {
-            public commandValidatoe()
+            public CommandValidator()
             {
-                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+                 RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
             }
         }
         public class Handler : IRequestHandler<command, Result<Unit>>

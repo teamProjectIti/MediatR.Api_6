@@ -14,7 +14,7 @@ namespace Application.Activities
             public Activity Activity { get; set; }
         }
 
-        public class commandValidatoe : AbstractValidator<Activity>
+        public class commandValidatoe : AbstractValidator<command>
         {
             public commandValidatoe()
             {
